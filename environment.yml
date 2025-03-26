@@ -13,8 +13,8 @@ dependencies:
       - dbt-core
       - dbt-bigquery
       - apache-airflow
+      - apache-beam[gcp]
       - google-cloud-storage
       - google-cloud-bigquery
       - google-cloud-pubsub
-      - google-cloud-dataflow
       - requests
