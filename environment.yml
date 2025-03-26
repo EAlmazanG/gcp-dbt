@@ -1,0 +1,20 @@
+name: gcp-dbt-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pandas
+  - numpy
+  - matplotlib
+  - scikit-learn
+  - jupyterlab
+  - pip:
+      - dbt-core
+      - dbt-bigquery
+      - apache-airflow
+      - google-cloud-storage
+      - google-cloud-bigquery
+      - google-cloud-pubsub
+      - google-cloud-dataflow
+      - requests
