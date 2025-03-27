@@ -6,7 +6,7 @@ default_args = {
     'start_date': datetime(2025, 1, 1),
 }
 
-with DAG("update_all_data",
+with DAG("run_complete_pipeline",
          schedule_interval=None,
          catchup=False,
          default_args=default_args,
