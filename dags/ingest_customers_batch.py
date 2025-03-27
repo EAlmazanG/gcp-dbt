@@ -1,19 +1,8 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-import requests
 import os
-
-from google.cloud import storage
-
-def download_and_upload_to_gcs_batch(url, local_path, bucket_name, blob_name):
-    response = requests.get(url)
-    with open(local_path, "wb") as f:
-        f.write(response.content)
-    client = storage.Client()
-    bucket = client.get_bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(local_path)
+from utils.gcs_utils import download_and_upload_to_gcs_batch
 
 default_args = {
     'start_date': datetime(2025, 1, 1),
