@@ -7,7 +7,7 @@ default_args = {
     'start_date': datetime(2025, 1, 1),
 }
 
-with DAG("simulate_stream_items",
+with DAG("simulate_items_stream",
          schedule_interval=None,
          catchup=False,
          default_args=default_args,
