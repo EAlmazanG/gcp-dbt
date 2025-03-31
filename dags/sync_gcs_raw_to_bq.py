@@ -14,7 +14,8 @@ batch_sources = [
 ]
 
 streaming_sources = [
-    {"name": "items", "path": f"gs://{BUCKET}/raw/streaming/items/output/*.avro"},
+    {"name": "items", "path": f"gs://{BUCKET}/raw/streaming/items/output/*"},
+    {"name": "orders", "path": f"gs://{BUCKET}/raw/streaming/orders/output/*"},
 ]
 
 default_args = {
@@ -64,7 +65,7 @@ with DAG(
                         "datasetId": "raw_streaming",
                         "tableId": source["name"]
                     },
-                    "sourceFormat": "AVRO",
+                    "sourceFormat": "AUTO",
                     "writeDisposition": "WRITE_APPEND",
                 }
             }
