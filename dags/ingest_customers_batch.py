@@ -19,7 +19,7 @@ with DAG("ingest_customers_batch",
         task_id="download_and_upload_to_gcs",
         python_callable=download_and_upload_to_gcs_batch,
         op_kwargs={
-            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/c5db42465ce5364fe5464ad1b0dc9935aeae08c3/data/raw_customers.csv",
+            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/bcdf04810ef936ffc3cbfa452b112b45bcf29b37/data/raw_customers.csv",
             "local_path": "/tmp/raw_customers.csv",
             "bucket_name": "gcp-dbt_datalake",
             "blob_name": "raw/batch/raw_customers.csv"

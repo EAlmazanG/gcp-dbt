@@ -18,7 +18,7 @@ with DAG("simulate_orders_stream",
         task_id="simulate_orders_stream",
         python_callable=simulate_streaming_from_csv,
         op_kwargs={
-            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/2e54e79911728303a46fe4b78cedece0571efc0f/data/raw_orders.csv",
+            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/bcdf04810ef936ffc3cbfa452b112b45bcf29b37/data/raw_orders.csv",
             "topic_path": "projects/gcp-dbt-454911/topics/orders-stream",
             "batch_size": 500,
             "interval_secs": 2

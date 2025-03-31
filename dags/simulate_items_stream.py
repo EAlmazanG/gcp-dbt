@@ -18,7 +18,7 @@ with DAG("simulate_items_stream",
         task_id="simulate_items_stream",
         python_callable=simulate_streaming_from_csv,
         op_kwargs={
-            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/8e49f9268c9f82fdc6348294ddbcb26269d571cb/data/raw_items.csv",
+            "url": "https://raw.githubusercontent.com/EAlmazanG/gcp-dbt/bcdf04810ef936ffc3cbfa452b112b45bcf29b37/data/raw_items.csv",
             "topic_path": "projects/gcp-dbt-454911/topics/items-stream",
             "batch_size": 1000,
             "interval_secs": 1
