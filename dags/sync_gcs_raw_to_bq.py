@@ -53,7 +53,7 @@ with DAG(
         )
 
         start >> load_batch
-
+        
     for source in streaming_sources:
         load_stream = BigQueryInsertJobOperator(
             task_id=f"load_stream_{source['name']}",
@@ -65,10 +65,12 @@ with DAG(
                         "datasetId": "raw_streaming",
                         "tableId": source["name"]
                     },
-                    "sourceFormat": "AUTO",
+                    "sourceFormat": "AVRO",
                     "writeDisposition": "WRITE_APPEND",
+                    "autodetect": True
                 }
-            }
+            },
+            gcp_conn_id="google_cloud_default"
         )
 
         start >> load_stream
