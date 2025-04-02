@@ -5,7 +5,7 @@ gcp_dbt_project:
       method: oauth
       project: gcp-dbt-454911
       dataset: dbt_staging
-      location: EU
+      location: europe-southwest1
       threads: 1
       job_execution_timeout_seconds: 600
   target: dev
