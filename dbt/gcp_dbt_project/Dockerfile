@@ -1,10 +1,12 @@
 FROM python:3.10-slim
 
-RUN pip install --upgrade pip
-RUN pip install dbt-bigquery==1.9.3
-
 WORKDIR /app
-COPY . /app
+
+COPY . .
+
+RUN apt-get update && apt-get install -y git && \
+    pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir dbt-bigquery==1.9.3
 
 ENV DBT_PROFILES_DIR=/app/profiles
 
