@@ -1,6 +1,6 @@
 gcp_dbt_project:
   outputs:
-  
+
     dev:
       type: bigquery
       method: oauth
@@ -19,4 +19,4 @@ gcp_dbt_project:
       threads: 1
       keyfile: /app/profiles/keyfile.json
 
-  target: dev
+  target: prod
