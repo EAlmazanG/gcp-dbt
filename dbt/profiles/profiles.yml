@@ -1,5 +1,6 @@
 gcp_dbt_project:
   outputs:
+  
     dev:
       type: bigquery
       method: oauth
@@ -8,4 +9,14 @@ gcp_dbt_project:
       location: europe-southwest1
       threads: 1
       job_execution_timeout_seconds: 600
+
+    prod:
+      type: bigquery
+      method: service_account
+      project: gcp-dbt-454911
+      dataset: dbt_staging
+      location: europe-southwest1
+      threads: 1
+      keyfile: /app/profiles/keyfile.json
+
   target: dev
