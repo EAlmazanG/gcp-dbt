@@ -12,7 +12,7 @@ gcp_dbt_project:
 
     prod:
       type: bigquery
-      method: service_account
+      method: service-account
       project: gcp-dbt-454911
       dataset: dbt_staging
       location: europe-southwest1

@@ -8,5 +8,3 @@ RUN apt-get update && apt-get install -y git && \
     pip install dbt-bigquery==1.9.1
 
 ENV DBT_PROFILES_DIR=/app/profiles
-
-CMD ["dbt", "run"]
