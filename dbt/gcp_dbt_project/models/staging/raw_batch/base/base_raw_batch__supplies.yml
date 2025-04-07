@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: base_raw_batch__supplies
+    description: Supplies from raw_batch with clean structure.
+    columns:
+      - name: supply_id
+        description: Unique identifier for each supply.
+        data_type: string
+        tests:
+          - not_null
+          
+      - name: product_id
+        description: SKU identifier of the related product.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: supply_uuid
+        description: Surrogate key generated from supply_id and product_id.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: supply_name
+        description: Name of the supply.
+        data_type: string
+
+      - name: supply_cost_eur
+        description: Cost of the supply in euros (originally in cents).
+        data_type: int64
+
+      - name: is_perishable_supply
+        description: Boolean indicating whether the supply is perishable.
+        data_type: boolean

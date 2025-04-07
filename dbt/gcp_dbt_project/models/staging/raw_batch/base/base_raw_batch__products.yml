@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: base_raw_batch__products
+    description: Products from raw_batch with clean structure.
+    columns:
+      - name: product_id
+        description: Unique identifier for each product.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: product_name
+        description: Product name.
+        data_type: string
+
+      - name: product_description
+        description: Description of the product.
+        data_type: string
+        
+      - name: product_price_eur
+        description: Product price in euros (integer, in cents originally).
+        data_type: int64

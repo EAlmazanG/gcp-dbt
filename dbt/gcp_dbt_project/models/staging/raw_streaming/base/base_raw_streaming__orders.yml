@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: base_raw_streaming__orders
+    description: Orders from raw_streaming with clean structure.
+    columns:
+      - name: pubsub_event_timestamp
+        description: Timestamp when the event was published to Pub/Sub.
+        data_type: timestamp
+        tests:
+          - not_null
+
+      - name: order_id
+        description: Unique identifier for each order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: store_id
+        description: Identifier of the store related to the order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer placing the order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: ordered_at
+        description: Timestamp when the order was placed.
+        data_type: timestamp
+        tests:
+          - not_null
+
+      - name: order_subtotal_eur
+        description: Subtotal amount of the order in euros.
+        data_type: float64
+
+      - name: order_tax_paid_eur
+        description: Tax paid for the order in euros.
+        data_type: float64
+        
+      - name: order_total_eur
+        description: Total amount of the order in euros.
+        data_type: float64

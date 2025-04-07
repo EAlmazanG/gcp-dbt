@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: base_raw_streaming__items
+    description: Items from raw_streaming with clean structure.
+    columns:
+      - name: pubsub_event_timestamp
+        description: Timestamp when the event was published to Pub/Sub.
+        data_type: timestamp
+        tests:
+          - not_null
+          
+      - name: item_id
+        description: Unique identifier for each item.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: Identifier of the related order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: product_id
+        description: SKU identifier of the product.
+        data_type: string
+        tests:
+          - not_null

@@ -6,8 +6,11 @@ models:
     columns:
       - name: customer_id
         description: Unique identifier for each customer
+        data_type: string
         tests:
           - not_null
           - unique
+          
       - name: customer_name
         description: Customer name. PII.
+        data_type: string
