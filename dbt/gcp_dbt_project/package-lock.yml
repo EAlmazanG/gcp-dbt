@@ -5,8 +5,6 @@ packages:
     version: 0.10.4
   - package: dbt-labs/audit_helper
     version: 0.12.1
-  - package: Snowflake-Labs/dbt_constraints
-    version: 1.0.4
   - package: calogica/dbt_date
     version: 0.10.1
-sha1_hash: 0c3c0ea0390e07928bad8ba99817145d34eb1afa
+sha1_hash: dca732de4dc7d8a05896f59e40edc7c018c0f993
