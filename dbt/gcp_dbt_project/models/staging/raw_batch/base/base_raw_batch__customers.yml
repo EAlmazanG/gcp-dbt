@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: base_raw_batch__customers
+    description: Customers from raw_batch with clean structure
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer
+        tests:
+          - not_null
+          - unique
+      - name: customer_name
+        description: Customer name. PII.
