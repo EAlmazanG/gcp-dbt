@@ -1,24 +1,17 @@
 version: 2
 
 sources:
-  - name: ecom
-    schema: raw
-    description: E-commerce data for the Jaffle Shop
+  - name: raw_streaming
+    schema: raw_streaming
+    description: E-commerce streaming example data.
     freshness:
       warn_after:
         count: 24
         period: hour
     tables:
-      - name: raw_customers
-        description: One record per person who has purchased one or more items
-      - name: raw_orders
-        description: One record per order (consisting of one or more order items)
-        loaded_at_field: ordered_at
-      - name: raw_items
-        description: Items included in an order
-      - name: raw_stores
-        loaded_at_field: opened_at
-      - name: raw_products
-        description: One record per SKU for items sold in stores
-      - name: raw_supplies
-        description: One record per supply per SKU of items sold in stores
+      - name: orders
+        description: One record per order (consisting of one or more order items).
+        loaded_at_field: pubsub_event_timestamp
+      - name: items
+        description: Items included in an order.
+        loaded_at_field: pubsub_event_timestamp
