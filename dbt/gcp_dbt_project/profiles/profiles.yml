@@ -19,4 +19,4 @@ gcp_dbt_project:
       threads: 1
       keyfile: /app/profiles/keyfile.json
 
-  target: prod
+  target: dev

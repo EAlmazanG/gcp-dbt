@@ -176,3 +176,4 @@ cython_debug/
 dbt/profiles/.user.yml
 dbt/profiles/keyfile.json
 dbt/gcp_dbt_project/profiles/keyfile.json
+dbt/gcp_dbt_project/profiles/.user.yml
