@@ -8,5 +8,5 @@ select
     cast(sku as string) as product_id,
     cast(name as string) as product_name,
     cast(description as string) as product_description,
-    cast(price / 100 as int64) as product_price_eur
+    cast(price / 100 as float64) as product_price_eur
 from source
