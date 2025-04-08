@@ -33,7 +33,7 @@ with
         select
             order_id,
             sum(total_supply_cost_eur) as total_order_cost_eur,
-            sum(product_price_eur) as total_order_items_cost_eur,
+            sum(product_price_eur) as total_order_revenue_eur,
             count(item_id) as number_order_items
         from order_items
         group by 1
@@ -49,7 +49,8 @@ with
             orders.order_tax_paid_eur,
             orders.order_total_eur,
             order_items_summary.total_order_cost_eur,
-            order_items_summary.total_order_items_cost_eur,
+            order_items_summary.total_order_revenue_eur,
+            order_items_summary.total_order_revenue_eur - order_items_summary.total_order_cost_eur as total_order_profit_eur,
             order_items_summary.number_order_items,
             row_number() over (
                 partition by orders.customer_id
