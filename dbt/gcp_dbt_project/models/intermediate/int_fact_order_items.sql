@@ -5,7 +5,6 @@
 }}
 
 with
-
     items as (
         select
             item_id,
@@ -29,7 +28,8 @@ with
     products as (
         select 
             product_id,
-            product_name
+            product_name,
+            product_price_eur
         from {{ ref('base_raw_batch__products') }}
     ),
 
@@ -41,7 +41,7 @@ with
             supply_name,
             supply_cost_eur,
             is_perishable_supply
-        from {{ ref('base_raw_batch__products') }}
+        from {{ ref('base_raw_batch__supplies') }}
     ),
 
     supplies_summary as (
@@ -57,13 +57,13 @@ with
             items.*,
             orders.ordered_at,
             products.product_name,
-            products.product_price,
-            order_supplies_summary.stotal_supply_cost_eurupply_cost
-        from order_items
-        left join orders on order_items.order_id = orders.order_id
-        left join products on order_items.product_id = products.product_id
-        left join order_supplies_summary
-            on order_items.product_id = order_supplies_summary.product_id
+            products.product_price_eur,
+            supplies_summary.total_supply_cost_eur
+        from items
+        left join orders on items.order_id = orders.order_id
+        left join products on items.product_id = products.product_id
+        left join supplies_summary
+            on items.product_id = supplies_summary.product_id
     )
 
 select * from combination
