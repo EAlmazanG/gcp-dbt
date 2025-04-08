@@ -54,7 +54,9 @@ with
 
     combination as (
         select
-            items.*,
+            items.item_id,
+            items.order_id,
+            items.product_id,
             orders.ordered_at,
             products.product_name,
             products.product_price_eur,
