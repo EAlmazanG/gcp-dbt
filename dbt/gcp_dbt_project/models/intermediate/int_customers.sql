@@ -32,9 +32,9 @@ with
             count(distinct orders.order_id) > 1 as is_repeat_buyer,
             min(orders.ordered_at) as first_ordered_at,
             max(orders.ordered_at) as last_ordered_at,
-            sum(orders.subtotal) as total_pretax_purchases_eur,
-            sum(orders.tax_paid) as total_tax_purchases_eur,
-            sum(orders.order_total) as total_purchases_eur
+            sum(orders.order_subtotal_eur) as total_pretax_purchases_eur,
+            sum(orders.order_tax_paid_eur) as total_tax_purchases_eur,
+            sum(orders.order_total_eur) as total_purchases_eur
         from orders
         group by 1
     ),
