@@ -1,18 +1,18 @@
 {{
   config(
-        materialized = 'table',
-    )
+    materialized = 'table'
+  )
 }}
 
 with 
     date_spine as ( 
-        {{  
+        {{
             dbt_utils.date_spine(
-                start_date = "to_date('01/01/1989', 'mm/dd/yyyy')",
+                start_date = "cast('1989-01-01' as date)",
                 datepart = "day",
-                end_date = "dateadd(year, 10, current_date)"
+                end_date = "date_add(current_date, interval 10 year)"
             )
-        }} 
+        }}
     ),
      
     calculated as (
@@ -29,12 +29,14 @@ with
                 when format_date('%A', date_day) = 'Saturday' then 6
                 when format_date('%A', date_day) = 'Sunday' then 7
             end as day_of_week,
+
             date_trunc(date_day, week) as first_day_of_week,
             last_value(date_day) over (
                 partition by date_trunc(date_day, week)
                 order by date_day
                 rows between unbounded preceding and unbounded following
             ) as last_day_of_week,
+
             extract(week from date_day) as week_of_year,
             extract(month from date_day) as month_number,
             extract(day from date_day) as day_of_month,
@@ -42,6 +44,7 @@ with
             format_date('%b', date_day) as short_month_name,
             date_trunc(date_day, month) as first_day_of_month,
             date_sub(date_add(date_trunc(date_day, month), interval 1 month), interval 1 day) as last_day_of_month,
+
             extract(year from date_day) as year_number,
             row_number() over (
                 partition by extract(year from date_day)
@@ -65,7 +68,9 @@ with
                 order by date_day
                 rows between unbounded preceding and unbounded following
             ) as last_day_of_quarter,
+
             concat(cast(extract(year from date_day) as string), '-Q', cast(extract(quarter from date_day) as string)) as quarter_name,
+
             case
                 when extract(dayofweek from date_day) in (1, 7) then 1
                 else 0
