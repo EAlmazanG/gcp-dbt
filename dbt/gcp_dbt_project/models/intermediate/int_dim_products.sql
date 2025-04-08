@@ -6,7 +6,7 @@
 
 with
     products as (
-        select * from from {{ ref('base_raw_batch__products') }}
+        select * from {{ ref('base_raw_batch__products') }}
     )
 
 select * from products
