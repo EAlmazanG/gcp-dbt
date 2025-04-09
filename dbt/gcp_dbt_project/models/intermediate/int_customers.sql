@@ -39,6 +39,7 @@ with
         select
             orders.customer_id,
             count(distinct orders.order_id) as number_orders,
+            sum(orders.number_order_items) as number_order_items,
             count(distinct orders.order_id) < 2 as is_new_customer,
             min(orders.ordered_at) as first_ordered_at,
             max(orders.ordered_at) as last_ordered_at,
@@ -63,6 +64,11 @@ with
             orders_summary.total_tax_purchases_eur,
             orders_summary.total_purchases_eur,
             orders_summary.number_orders,
+            orders_summary.number_order_items,
+            round(
+                number_order_items / nullif(number_orders, 0),
+                2
+            ) as avg_items_per_order,
             orders_summary.first_ordered_at,
             orders_summary.last_ordered_at,
             orders_summary.is_new_customer,
