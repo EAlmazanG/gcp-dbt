@@ -29,7 +29,10 @@ with
         select 
             product_id,
             product_name,
-            product_price_eur
+            product_type,
+            product_price_eur,
+            is_item_food,
+            is_item_drink
         from {{ ref('base_raw_batch__products') }}
     ),
 
@@ -61,6 +64,9 @@ with
             items.product_id,
             orders.ordered_at,
             products.product_name,
+            products.product_type,
+            products.is_item_food,
+            products.is_item_drink,
             products.product_price_eur,
             supplies_summary.total_supply_cost_eur,
             case when supplies_summary.number_perishable_supplies = 0 then false else true end as is_perishable_product

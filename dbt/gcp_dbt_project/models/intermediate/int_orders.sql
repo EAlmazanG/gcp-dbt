@@ -24,6 +24,9 @@ with
             product_id,
             ordered_at,
             product_name,
+            product_type,
+            is_item_food,
+            is_item_drink,
             product_price_eur,
             total_supply_cost_eur,
             is_perishable_product
@@ -36,6 +39,8 @@ with
             sum(total_supply_cost_eur) as total_order_cost_eur,
             sum(product_price_eur) as total_order_revenue_eur,
             count(item_id) as number_order_items,
+            count(case when is_item_food then item_id else null end) as number_order_food_items,
+            count(case when is_item_drink then item_id else null end) as number_order_drink_items,
             count(case when is_perishable_product then item_id else null end) as number_order_perishable_items
         from order_items
         group by 1
@@ -54,6 +59,8 @@ with
             ifnull(order_items_summary.total_order_revenue_eur, 0) as total_order_revenue_eur,
             ifnull(order_items_summary.total_order_revenue_eur - order_items_summary.total_order_cost_eur, 0) as total_order_profit_eur,
             ifnull(order_items_summary.number_order_items, 0) as number_order_items,
+            ifnull(order_items_summary.number_order_drink_items, 0) as number_order_drink_items,
+            ifnull(order_items_summary.number_order_food_items, 0) as number_order_food_items,
             ifnull(order_items_summary.number_order_perishable_items, 0) as number_order_perishable_items,
             row_number() over (
                 partition by orders.customer_id
