@@ -5,7 +5,7 @@ gcp_dbt_project:
       type: bigquery
       method: oauth
       project: gcp-dbt-454911
-      dataset: dbt_staging
+      dataset: dbt
       location: europe-southwest1
       threads: 1
       job_execution_timeout_seconds: 600
@@ -14,7 +14,7 @@ gcp_dbt_project:
       type: bigquery
       method: service-account
       project: gcp-dbt-454911
-      dataset: dbt_staging
+      dataset: dbt
       location: europe-southwest1
       threads: 1
       keyfile: /app/profiles/keyfile.json
