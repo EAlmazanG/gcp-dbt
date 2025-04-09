@@ -23,14 +23,16 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-models:
-  gcp_dbt_project:
-    marts:
-      +schema: dbt_mart
-    staging:
-      +schema: dbt_staging
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  gcp_dbt_project:  # <- asegúrate de que este nombre coincida con name: del proyecto
+    marts:
+      +schema: mart
+    staging:
+      +schema: staging
+    intermediate:
+      +schema: staging
 
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
