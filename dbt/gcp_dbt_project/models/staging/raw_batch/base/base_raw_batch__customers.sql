@@ -8,4 +8,4 @@ select
     cast(string_field_0 as string) as customer_id,
     cast(string_field_1 as string) as customer_name
 from source
-where customer_id <> 'string_field_0'
+where string_field_0 <> 'string_field_0'
