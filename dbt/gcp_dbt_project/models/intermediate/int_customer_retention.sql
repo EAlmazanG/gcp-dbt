@@ -18,7 +18,7 @@ with
             order_id,
             customer_id,
             ordered_at
-        from {{ ref('int_fact_orders') }}
+        from {{ ref('base_raw_streaming__orders') }}
     ),
 
     orders_by_month as (
