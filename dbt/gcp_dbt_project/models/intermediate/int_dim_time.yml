@@ -1,0 +1,100 @@
+version: 2
+
+models:
+  - name: int_dim_time
+    description: Time dimension table including detailed date attributes used for calendar-based analysis.
+    columns:
+      - name: date_day
+        description: Calendar date.
+        data_type: date
+        tests:
+          - not_null
+          - unique
+
+      - name: day_name
+        description: Full name of the day.
+        data_type: string
+
+      - name: short_day_name
+        description: Abbreviated name of the day.
+        data_type: string
+
+      - name: day_of_week
+        description: Numeric representation of the day in the week (1=Monday, 7=Sunday).
+        data_type: int64
+
+      - name: first_day_of_week
+        description: First date of the corresponding week.
+        data_type: date
+
+      - name: last_day_of_week
+        description: Last date of the corresponding week.
+        data_type: date
+
+      - name: week_of_year
+        description: Week number within the year.
+        data_type: int64
+
+      - name: month_name
+        description: Full name of the month.
+        data_type: string
+
+      - name: short_month_name
+        description: Abbreviated name of the month.
+        data_type: string
+
+      - name: month_number
+        description: Month number (1–12).
+        data_type: int64
+
+      - name: day_of_month
+        description: Day number within the month.
+        data_type: int64
+
+      - name: first_day_of_month
+        description: First date of the corresponding month.
+        data_type: date
+
+      - name: last_day_of_month
+        description: Last date of the corresponding month.
+        data_type: date
+
+      - name: quarter_name
+        description: Year and quarter (e.g., 2025-Q1).
+        data_type: string
+
+      - name: quarter_number
+        description: Quarter number (1–4).
+        data_type: int64
+
+      - name: day_of_quarter
+        description: Day number within the quarter.
+        data_type: int64
+
+      - name: first_day_of_quarter
+        description: First date of the corresponding quarter.
+        data_type: date
+
+      - name: last_day_of_quarter
+        description: Last date of the corresponding quarter.
+        data_type: date
+
+      - name: year_number
+        description: Year number.
+        data_type: int64
+
+      - name: day_of_year
+        description: Day number within the year.
+        data_type: int64
+
+      - name: first_day_of_year
+        description: First date of the corresponding year.
+        data_type: date
+
+      - name: last_day_of_year
+        description: Last date of the corresponding year.
+        data_type: date
+
+      - name: is_weekend
+        description: Indicates whether the date is a weekend (1) or not (0).
+        data_type: int64

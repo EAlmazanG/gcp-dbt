@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: int_fact_order_items
+    description: Enriched fact table for each order item, combining order, product, and supply details.
+    columns:
+      - name: item_id
+        description: Unique identifier for each item.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: Identifier of the related order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: product_id
+        description: Identifier of the product purchased.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: ordered_at
+        description: Timestamp when the order was placed.
+        data_type: timestamp
+
+      - name: product_name
+        description: Name of the product.
+        data_type: string
+
+      - name: product_type
+        description: Type/category of the product.
+        data_type: string
+
+      - name: is_item_food
+        description: Indicates if the product is food.
+        data_type: boolean
+
+      - name: is_item_drink
+        description: Indicates if the product is a drink.
+        data_type: boolean
+
+      - name: product_price_eur
+        description: Price of the product in euros.
+        data_type: float64
+
+      - name: total_supply_cost_eur
+        description: Total cost of supplies for this product in euros.
+        data_type: float64
+
+      - name: is_perishable_product
+        description: Indicates if the product is perishable based on its supplies.
+        data_type: boolean

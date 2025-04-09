@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: int_dim_products
+    description: Products from raw_batch with clean structure.
+    columns:
+      - name: product_id
+        description: Unique identifier for each product.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: product_type
+        description: Product type.
+        data_type: string
+
+      - name: product_name
+        description: Product name.
+        data_type: string
+
+      - name: product_description
+        description: Description of the product.
+        data_type: string
+        
+      - name: product_price_eur
+        description: Product price in euros (integer, in cents originally).
+        data_type: float64
+
+      - name: is_item_food
+        data_type: boolean
+
+      - name: is_item_drink
+        data_type: boolean

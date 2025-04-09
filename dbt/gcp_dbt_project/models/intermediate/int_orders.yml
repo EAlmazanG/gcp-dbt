@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: int_orders
+    description: Intermediate table combining raw order data with aggregated item-level metrics and profitability.
+    columns:
+      - name: order_id
+        description: Unique identifier for each order.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: store_id
+        description: Identifier of the store where the order was placed.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer placing the order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: ordered_at
+        description: Timestamp when the order was placed.
+        data_type: timestamp
+        tests:
+          - not_null
+
+      - name: order_subtotal_eur
+        description: Order subtotal in euros (before tax).
+        data_type: float64
+
+      - name: order_tax_paid_eur
+        description: Tax paid for the order in euros.
+        data_type: float64
+
+      - name: order_total_eur
+        description: Total amount of the order in euros (including tax).
+        data_type: float64
+
+      - name: total_order_cost_eur
+        description: Total cost of the order based on item supply costs.
+        data_type: float64
+
+      - name: total_order_revenue_eur
+        description: Total expected revenue from the order.
+        data_type: float64
+
+      - name: total_order_profit_eur
+        description: Profit calculated as revenue minus cost.
+        data_type: float64
+
+      - name: number_order_items
+        description: Total number of items in the order.
+        data_type: int64
+
+      - name: number_order_drink_items
+        description: Number of drink items in the order.
+        data_type: int64
+
+      - name: number_order_food_items
+        description: Number of food items in the order.
+        data_type: int64
+
+      - name: number_order_perishable_items
+        description: Number of perishable items in the order.
+        data_type: int64
+
+      - name: customer_order_number
+        description: Sequential number of the order for the customer (based on order date).
+        data_type: int64

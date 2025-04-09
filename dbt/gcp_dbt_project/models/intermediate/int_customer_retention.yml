@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: int_customer_retention
+    description: Checks whether each customer placed at least one order in every month between their first and last order.
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: has_order_every_month
+        description: Indicates if the customer placed an order in every month from their first to last order.
+        data_type: boolean

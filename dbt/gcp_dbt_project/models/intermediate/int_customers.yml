@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: int_customers
+    description: Aggregates customer order behavior, churn status, and retention to define customer categories.
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: total_pretax_purchases_eur
+        description: Total amount of purchases before tax.
+        data_type: float64
+
+      - name: total_tax_purchases_eur
+        description: Total amount of taxes paid for purchases.
+        data_type: float64
+
+      - name: total_purchases_eur
+        description: Total amount of purchases including tax.
+        data_type: float64
+
+      - name: number_orders
+        description: Total number of orders placed by the customer.
+        data_type: int64
+
+      - name: number_order_items
+        description: Total number of items ordered by the customer.
+        data_type: int64
+
+      - name: avg_items_per_order
+        description: Average number of items per order.
+        data_type: float64
+
+      - name: first_ordered_at
+        description: Timestamp of the customer's first order.
+        data_type: timestamp
+
+      - name: last_ordered_at
+        description: Timestamp of the customer's last order.
+        data_type: timestamp
+
+      - name: is_new_customer
+        description: Indicates if the customer has placed only one order.
+        data_type: boolean
+
+      - name: days_between_first_and_last_order
+        description: Days between the customer's first and last order.
+        data_type: int64
+
+      - name: is_1m_churned
+        description: Indicates if the customer has not ordered in the last 30 days.
+        data_type: boolean
+
+      - name: is_3m_churned
+        description: Indicates if the customer has not ordered in the last 90 days.
+        data_type: boolean
+
+      - name: has_order_every_month
+        description: Indicates if the customer placed an order in every month between their first and last order.
+        data_type: boolean
+
+      - name: customer_category
+        description: Categorization of the customer based on order activity and recency.
+        data_type: string
