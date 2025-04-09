@@ -1,3 +1,7 @@
+{% set dataset_current_date_query %}
+    (select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }})
+{% endset %}
+
 {{ 
     config(
         materialized='table',
@@ -5,7 +9,6 @@
 }}
 
 with
-    dataset_current_date as (select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }}),
 
     customers as (
         select
@@ -50,7 +53,7 @@ with
         select
             customer_id,
             has_order_every_month
-        from {{ ref('int_fact_orders') }}
+        from {{ ref('int_customer_retention') }}
     ),
 
     combination as (
@@ -65,20 +68,20 @@ with
             orders_summary.is_new_customer,
             date_diff(cast(orders_summary.last_ordered_at as date), cast(orders_summary.first_ordered_at as date), day) as days_between_first_and_last_order,
             date_diff(
-                dataset_current_date,
+                {{ dataset_current_date_query }},
                 cast(orders_summary.last_ordered_at as date),
                 day
             ) > 30 as is_1m_churned,
             date_diff(
-                dataset_current_date,
+                {{ dataset_current_date_query }},
                 cast(orders_summary.last_ordered_at as date),
                 day
             ) > 90 as is_3m_churned,
-            customer_retention.has_order_every_month
+            customer_retention.has_order_every_month,
             case
                 when orders_summary.is_new_customer then 'new'
-                when is_1m_churned then '1m_churned'
-                when is_3m_churned then '3m_churned'
+                when date_diff({{ dataset_current_date_query }}, cast(orders_summary.last_ordered_at as date), day) > 90 then '3m_churned'
+                when date_diff({{ dataset_current_date_query }}, cast(orders_summary.last_ordered_at as date), day) > 30 then '1m_churned'
                 when customer_retention.has_order_every_month then 'loyal'
                 else 'recurrent'
             end as customer_category
