@@ -23,7 +23,12 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-
+models:
+  gcp_dbt_project:
+    marts:
+      +schema: dbt_mart
+    staging:
+      +schema: dbt_staging
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
