@@ -50,7 +50,6 @@ with
             sum(supply_cost_eur) as total_supply_cost_eur,
             count(distinct case when is_perishable_supply then supply_id else null end) as number_perishable_supplies,
             count(distinct case when not is_perishable_supply then supply_id else null end) as number_not_perishable_supplies,
-            case when number_perishable_supplies = 0 then false else true end as is_perishable_product
         from supplies
         group by 1
     ),
@@ -64,7 +63,7 @@ with
             products.product_name,
             products.product_price_eur,
             supplies_summary.total_supply_cost_eur,
-            supplies_summary.is_perishable_product
+            case when supplies_summary.number_perishable_supplies = 0 then false else true end as is_perishable_product
         from items
         left join orders on items.order_id = orders.order_id
         left join products on items.product_id = products.product_id
