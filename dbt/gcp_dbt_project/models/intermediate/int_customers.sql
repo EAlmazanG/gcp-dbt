@@ -32,7 +32,7 @@ with
             number_order_items,
             number_order_perishable_items,
             customer_order_number    
-        from {{ ref('int_fact_orders') }}
+        from {{ ref('int_orders') }}
     ),
 
     orders_summary as (
