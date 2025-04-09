@@ -11,6 +11,10 @@ models:
           - not_null
           - unique
 
+      - name: product_type
+        description: Product type.
+        data_type: string
+
       - name: product_name
         description: Product name.
         data_type: string
@@ -22,3 +26,9 @@ models:
       - name: product_price_eur
         description: Product price in euros (integer, in cents originally).
         data_type: float64
+
+      - name: is_item_food
+        data_type: boolean
+
+      - name: is_item_drink
+        data_type: boolean

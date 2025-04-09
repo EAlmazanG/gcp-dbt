@@ -10,6 +10,6 @@ select
     cast(name as string) as product_name,
     cast(description as string) as product_description,
     round(cast(price / 100 as float64), 2) as product_price_eur,
-    ifnull(type = 'jaffle', false) as is_food_item,
-    ifnull(type = 'beverage', false) as is_drink_item
+    ifnull(type = 'jaffle', false) as is_item_food,
+    ifnull(type = 'beverage', false) as is_item_drink
 from source
