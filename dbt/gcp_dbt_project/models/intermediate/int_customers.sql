@@ -35,7 +35,7 @@ with
         select
             orders.customer_id,
             count(distinct orders.order_id) as number_orders,
-            count(distinct orders.order_id) < 2 as is_churn_customer,
+            count(distinct orders.order_id) < 2 as is_new_customer,
             min(orders.ordered_at) as first_ordered_at,
             max(orders.ordered_at) as last_ordered_at,
             sum(orders.order_subtotal_eur) as total_pretax_purchases_eur,
@@ -55,7 +55,7 @@ with
             orders_summary.total_tax_purchases_eur,
             orders_summary.total_purchases_eur,
             case
-                when orders_summary.is_repeat_buyer then 'returning'
+                when orders_summary.is_churn_customer then 'churn'
                 else 'new'
             end as customer_type
         from customers
