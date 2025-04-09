@@ -21,15 +21,21 @@ with
             ordered_at,
             order_subtotal_eur,
             order_tax_paid_eur,
-            order_total_eur        
-        from {{ ref('base_raw_streaming__orders') }}
+            order_total_eur,
+            total_order_cost_eur,
+            total_order_revenue_eur,
+            total_order_profit_eur,
+            number_order_items,
+            number_order_perishable_items,
+            customer_order_number    
+        from {{ ref('int_fact_orders') }}
     ),
 
     orders_summary as (
         select
             orders.customer_id,
-            count(distinct orders.order_id) as number_lifetime_orders,
-            count(distinct orders.order_id) > 1 as is_repeat_buyer,
+            count(distinct orders.order_id) as number_orders,
+            count(distinct orders.order_id) < 2 as is_churn_customer,
             min(orders.ordered_at) as first_ordered_at,
             max(orders.ordered_at) as last_ordered_at,
             sum(orders.order_subtotal_eur) as total_pretax_purchases_eur,
