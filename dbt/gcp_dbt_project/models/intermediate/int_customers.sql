@@ -5,6 +5,9 @@
 }}
 
 with
+    dataset_current_date as (
+        select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }})
+    ),
 
     customers as (
         select
@@ -45,22 +48,47 @@ with
         group by 1
     ),
 
+    customer_retention as (
+        select
+            customer_id,
+            has_order_every_month
+        from {{ ref('int_fact_orders') }}
+    ),
+
     combination as (
         select
             customers.customer_id,
-            orders_summary.number_lifetime_orders,
-            orders_summary.first_ordered_at,
-            orders_summary.last_ordered_at,
             orders_summary.total_pretax_purchases_eur,
             orders_summary.total_tax_purchases_eur,
             orders_summary.total_purchases_eur,
+            orders_summary.number_orders,
+            orders_summary.first_ordered_at,
+            orders_summary.last_ordered_at,
+            orders_summary.is_new_customer,
+            date_diff(cast(orders_summary.last_ordered_at as date), cast(orders_summary.first_ordered_at as date), day) as days_between_first_and_last_order,
+            date_diff(
+                dataset_current_date,
+                cast(orders_summary.last_ordered_at as date),
+                day
+            ) > 30 as is_1m_churned,
+            date_diff(
+                dataset_current_date,
+                cast(orders_summary.last_ordered_at as date),
+                day
+            ) > 90 as is_3m_churned,
+            customer_retention.has_order_every_month
             case
-                when orders_summary.is_churn_customer then 'churn'
-                else 'new'
-            end as customer_type
+                when orders_summary.is_new_customer then 'new'
+                when is_1m_churned then '1m_churned'
+                when is_3m_churned then '3m_churned'
+                when customer_retention.has_order_every_month then 'loyal'
+                else 'recurrent'
+            end as customer_category
         from customers
         left join orders_summary on
             customers.customer_id = orders_summary.customer_id
+        left join customer_retention on
+            customers.customer_id = customer_retention.customer_id
     )
 
 select * from combination
