@@ -25,7 +25,8 @@ with
             ordered_at,
             product_name,
             product_price_eur,
-            total_supply_cost_eur
+            total_supply_cost_eur,
+            is_perishable_product
         from {{ ref('int_fact_order_items') }}
     ),
 
@@ -34,7 +35,8 @@ with
             order_id,
             sum(total_supply_cost_eur) as total_order_cost_eur,
             sum(product_price_eur) as total_order_revenue_eur,
-            count(item_id) as number_order_items
+            count(item_id) as number_order_items,
+            count(case when is_perishable_product then item_id else null end) as number_order_perishable_items
         from order_items
         group by 1
     ),
@@ -48,10 +50,11 @@ with
             orders.order_subtotal_eur,
             orders.order_tax_paid_eur,
             orders.order_total_eur,
-            order_items_summary.total_order_cost_eur,
-            order_items_summary.total_order_revenue_eur,
-            order_items_summary.total_order_revenue_eur - order_items_summary.total_order_cost_eur as total_order_profit_eur,
-            order_items_summary.number_order_items,
+            ifnull(order_items_summary.total_order_cost_eur, 0) as total_order_cost_eur,
+            ifnull(order_items_summary.total_order_revenue_eur, 0) as total_order_revenue_eur,
+            ifnull(order_items_summary.total_order_revenue_eur - order_items_summary.total_order_cost_eur, 0) as total_order_profit_eur,
+            ifnull(order_items_summary.number_order_items, 0) as number_order_items,
+            ifnull(order_items_summary.number_order_perishable_items, 0) as number_order_perishable_items,
             row_number() over (
                 partition by orders.customer_id
                 order by orders.ordered_at asc
