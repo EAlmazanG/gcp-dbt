@@ -5,9 +5,7 @@
 }}
 
 with
-    dataset_current_date as (
-        select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }})
-    ),
+    dataset_current_date as (select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }}),
 
     customers as (
         select
