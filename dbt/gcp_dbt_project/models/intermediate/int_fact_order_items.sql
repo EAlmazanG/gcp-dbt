@@ -47,7 +47,7 @@ with
             stores.store_name,
             order_items.customer_id,
             customers.customer_category,
-            orders.ordered_at,
+            order_items.ordered_at,
             order_items.day_ordered_on,
             order_items.week_ordered_on,
             order_items.month_ordered_on,
@@ -58,11 +58,11 @@ with
             order_items.product_price_eur,
             order_items.total_supply_cost_eur,
             order_items.is_perishable_product
-        from items
+        from order_items
         left join stores on
-            stores.store_id = orders.store_id
+            stores.store_id = order_items.store_id
         left join customers on
-            customers.customer_id = orders.customers
+            customers.customer_id = order_items.customer_id
     )
 
 select * from combination
