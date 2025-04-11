@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: int_order_items
+    description: Enriched fact table for each order item, combining order, product, and supply details.
+    columns:
+      - name: item_id
+        description: Unique identifier for each item.
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: Identifier of the related order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: product_id
+        description: Identifier of the product purchased.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: store_id
+        description: Unique identifier for each store.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer placing the order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: ordered_at
+        description: Timestamp when the order was placed.
+        data_type: timestamp
+        tests:
+          - not_null
+
+      - name: day_ordered_on
+        description: Day the order was placed (truncated to day).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: week_ordered_on
+        description: Week the order was placed (truncated to week).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: month_ordered_on
+        description: Month the order was placed (truncated to month).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: product_name
+        description: Name of the product.
+        data_type: string
+
+      - name: product_type
+        description: Type/category of the product.
+        data_type: string
+
+      - name: is_item_food
+        description: Indicates if the product is food.
+        data_type: boolean
+
+      - name: is_item_drink
+        description: Indicates if the product is a drink.
+        data_type: boolean
+
+      - name: product_price_eur
+        description: Price of the product in euros.
+        data_type: float64
+
+      - name: total_supply_cost_eur
+        description: Total cost of supplies for this product in euros.
+        data_type: float64
+
+      - name: is_perishable_product
+        description: Indicates if the product is perishable based on its supplies.
+        data_type: boolean
