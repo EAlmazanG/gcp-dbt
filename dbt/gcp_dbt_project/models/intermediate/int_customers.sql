@@ -66,10 +66,6 @@ with
         from {{ ref('int_customer_retention') }}
     ),
 
-    stores as (
-
-    ),
-
     combination as (
         select
             customers.customer_id,
