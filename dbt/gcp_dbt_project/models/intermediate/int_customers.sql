@@ -56,7 +56,7 @@ with
     customer_retention as (
         select
             customer_id,
-            has_order_every_month
+            has_order_every_month,
             day_first_customer_transaction,
             day_last_customer_transaction,
             week_first_customer_transaction,
