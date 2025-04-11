@@ -12,10 +12,14 @@ models:
           - unique
 
       - name: store_id
-        description: Identifier of the store where the order was placed.
+        description: Unique identifier for each store.
         data_type: string
         tests:
           - not_null
+          
+      - name: store_name
+        description: Store name.
+        data_type: string
 
       - name: customer_id
         description: Identifier of the customer placing the order.

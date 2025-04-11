@@ -60,11 +60,17 @@ with
         group by 1
     ),
 
+    stores as (
+        select store_id, store_name from {{ ref('int_dim_stores') }}
+    ),
+
     combination as (
         select
             items.item_id,
             items.order_id,
             items.product_id,
+            orders.store_id,
+            stores.store_name,
             orders.ordered_at,
             orders.day_ordered_on,
             orders.week_ordered_on,
@@ -81,6 +87,8 @@ with
         left join products on items.product_id = products.product_id
         left join supplies_summary
             on items.product_id = supplies_summary.product_id
+        left join stores on
+            stores.store_id = orders.store_id
     )
 
 select * from combination
