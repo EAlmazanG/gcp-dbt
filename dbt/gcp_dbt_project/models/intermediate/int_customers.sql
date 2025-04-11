@@ -57,7 +57,17 @@ with
         select
             customer_id,
             has_order_every_month
+            day_first_customer_transaction,
+            day_last_customer_transaction,
+            week_first_customer_transaction,
+            week_last_customer_transaction,
+            month_first_customer_transaction,
+            month_last_customer_transaction
         from {{ ref('int_customer_retention') }}
+    ),
+
+    stores as (
+
     ),
 
     combination as (
@@ -86,11 +96,17 @@ with
                 cast(orders_summary.last_ordered_at as date),
                 day
             ) > 90 as is_3m_churned,
+            customer_retention.day_first_customer_transaction,
+            customer_retention.day_last_customer_transaction,
+            customer_retention.week_first_customer_transaction,
+            customer_retention.week_last_customer_transaction,
+            customer_retention.month_first_customer_transaction,
+            customer_retention.month_last_customer_transaction,
             customer_retention.has_order_every_month,
             case
                 when orders_summary.is_new_customer then 'new'
-                when date_diff({{ dataset_current_date_query }}, cast(orders_summary.last_ordered_at as date), day) > 90 then '3m_churned'
                 when date_diff({{ dataset_current_date_query }}, cast(orders_summary.last_ordered_at as date), day) > 30 then '1m_churned'
+                when date_diff({{ dataset_current_date_query }}, cast(orders_summary.last_ordered_at as date), day) > 90 then '3m_churned'
                 when customer_retention.has_order_every_month then 'loyal'
                 else 'recurrent'
             end as customer_category

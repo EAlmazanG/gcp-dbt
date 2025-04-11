@@ -59,6 +59,30 @@ models:
         description: Indicates if the customer has not ordered in the last 90 days.
         data_type: boolean
 
+      - name: day_first_customer_transaction
+        description: Date of the customer's first order.
+        data_type: date
+
+      - name: day_last_customer_transaction
+        description: Date of the customer's last order.
+        data_type: date
+
+      - name: week_first_customer_transaction
+        description: Start of the week of the customer's first order.
+        data_type: date
+
+      - name: week_last_customer_transaction
+        description: Start of the week of the customer's last order.
+        data_type: date
+
+      - name: month_first_customer_transaction
+        description: First month (start date) in which the customer placed an order.
+        data_type: date
+
+      - name: month_last_customer_transaction
+        description: Latest month considered in the dataset (based on dataset current date).
+        data_type: date
+
       - name: has_order_every_month
         description: Indicates if the customer placed an order in every month between their first and last order.
         data_type: boolean
