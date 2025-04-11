@@ -33,6 +33,16 @@ models:
         description: Store name.
         data_type: string
 
+      - name: customer_id
+        description: Identifier of the customer placing the order.
+        data_type: string
+        tests:
+          - not_null
+
+      - name: customer_category
+        description: Classification of the customer based on order behavior and recency.
+        data_type: string
+
       - name: ordered_at
         description: Timestamp when the order was placed.
         data_type: timestamp

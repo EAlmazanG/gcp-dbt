@@ -64,6 +64,13 @@ with
         select store_id, store_name from {{ ref('int_dim_stores') }}
     ),
 
+    customers as(
+        select
+            customer_id,
+            customer_category
+        from {{ ref('int_customers') }}
+    ),
+
     combination as (
         select
             items.item_id,
@@ -71,6 +78,8 @@ with
             items.product_id,
             orders.store_id,
             stores.store_name,
+            orders.customer_id,
+            customers.customer_category,
             orders.ordered_at,
             orders.day_ordered_on,
             orders.week_ordered_on,
@@ -89,6 +98,8 @@ with
             on items.product_id = supplies_summary.product_id
         left join stores on
             stores.store_id = orders.store_id
+        left join customers on
+            customers.customer_id = orders.customers
     )
 
 select * from combination
