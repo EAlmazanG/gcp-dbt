@@ -28,6 +28,24 @@ models:
         data_type: timestamp
         tests:
           - not_null
+          
+      - name: day_ordered_on
+        description: Day the order was placed (truncated to day).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: week_ordered_on
+        description: Week the order was placed (truncated to week).
+        data_type: date
+        tests:
+          - not_null
+
+      - name: month_ordered_on
+        description: Month the order was placed (truncated to month).
+        data_type: date
+        tests:
+          - not_null
 
       - name: order_subtotal_eur
         description: Order subtotal in euros (before tax).
