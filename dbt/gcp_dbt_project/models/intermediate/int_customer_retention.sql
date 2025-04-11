@@ -1,3 +1,7 @@
+{% set dataset_current_date_query %}
+    (select max(cast(ordered_at as date)) from {{ ref('base_raw_streaming__orders') }})
+{% endset %}
+
 {{ 
     config(
         materialized='table',
@@ -17,14 +21,14 @@ with
         select
             order_id,
             customer_id,
-            ordered_at
+            cast(ordered_at as date) as ordered_date
         from {{ ref('base_raw_streaming__orders') }}
     ),
 
     orders_by_month as (
         select
             customer_id,
-            format_date('%Y-%m', ordered_at) as year_month
+            format_date('%Y-%m', ordered_date) as year_month
         from orders
         group by customer_id, year_month
     ),
@@ -32,8 +36,13 @@ with
     months_per_customer as (
         select
             customer_id,
-            min(date_trunc(cast(ordered_at as date), month)) as first_month,
-            max(date_trunc(cast(ordered_at as date), month)) as last_month
+            min(date_trunc(ordered_date, month)) as month_first_customer_transaction,
+            max(date_trunc(ordered_date, month)) as month_last_customer_transaction,
+            {{ dataset_current_date_query }} as month_last_dataset,
+            min(ordered_date) as day_first_customer_transaction,
+            max(ordered_date) as day_last_customer_transaction,
+            min(date_trunc(ordered_date, week)) as week_first_customer_transaction, 
+            max(date_trunc(ordered_date, week)) as week_last_customer_transaction
         from orders
         group by customer_id
     ),
@@ -43,7 +52,7 @@ with
             customer_id,
             format_date('%Y-%m', month) as year_month
         from months_per_customer,
-        unnest(generate_date_array(first_month, last_month, interval 1 month)) as month
+        unnest(generate_date_array(month_first_customer_transaction, month_last_dataset, interval 1 month)) as month
     ),
 
     order_months_check as (
@@ -57,4 +66,15 @@ with
         group by all_months.customer_id
     )
 
-select * from order_months_check
+select
+    order_months_check.customer_id,
+    order_months_check.has_order_every_month,
+    months_per_customer.day_first_customer_transaction,
+    months_per_customer.day_last_customer_transaction,
+    months_per_customer.week_first_customer_transaction,
+    months_per_customer.week_last_customer_transaction,
+    months_per_customer.month_first_customer_transaction,
+    months_per_customer.month_last_customer_transaction
+from order_months_check
+left join months_per_customer
+    on order_months_check.customer_id = months_per_customer.customer_id
