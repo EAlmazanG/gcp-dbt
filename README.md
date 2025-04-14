@@ -17,8 +17,6 @@
 
 Many teams struggle to deploy modular, scalable data pipelines that follow best practices across cloud services. This project aims to provide a hands-on, reproducible template that solves this challenge using native GCP services and dbt for transformations.
 
----
-
 ## Technologies
 
 - **Cloud Storage**: Raw datalake and temp/log layers
@@ -29,7 +27,6 @@ Many teams struggle to deploy modular, scalable data pipelines that follow best 
 - **Cloud Run**: Executes dockerized dbt Core jobs
 - **Looker Studio**: Data visualization layer
 
----
 
 ## Project Structure
 ```bash
@@ -179,10 +176,8 @@ gcloud composer environments create composer-env \
 
 ![dag](img/dag.png)
 
-
 ### 7. Dashboarding in Looker Studio
 Final mart_* tables in BigQuery are connected to Looker
-- Dashboard shows:
 - Store-level metrics
 - Product insights
 - Customer behavior
