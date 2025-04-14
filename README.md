@@ -1,6 +1,6 @@
 # gcp-dbt
 
-![Architecture Flow](img/architecture.png)
+![dashboard](img/dashboard.png)
 
 <br></br>
 <p align="center">
@@ -66,6 +66,8 @@ gcp-dbt/
 
 ## Workflow
 
+![Architecture Flow](img/architecture.png)
+
 ### 1. Data Simulation
 
 - Based on the [dbt Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) project
@@ -97,6 +99,8 @@ Cloud Storage organizes raw/streaming/batch data by folder
 
 Also used for temp files, logs, backups and Composer code bucket
 
+![datalake](img/datalake.png)
+
 ### 4. BigQuery Loading
 
 Bigquery will work as Datawarehouse of the project.
@@ -112,6 +116,8 @@ bq mk --dataset --location={{REGION}} {{PROJECT_ID}}:dbt_staging
 bq mk --dataset --location={{REGION}} {{PROJECT_ID}}:dbt_mart
 ```
 
+![Architecture Flow](img/bigquery_raw.png)
+
 ### 5. dbt Core Transformations
 
 1. Install dbt Core locally for dev:
@@ -119,6 +125,10 @@ bq mk --dataset --location={{REGION}} {{PROJECT_ID}}:dbt_mart
 ```bash
 pip install dbt-bigquery
 ```
+
+![dbt](img/dbt.png)
+
+
 2. Build and push Docker image:
 
 ```bash
@@ -147,6 +157,10 @@ gcloud run jobs execute dbt-job \
   --region={{REGION}} \
   --project={{PROJECT_ID}}
 ```
+![cloud_run](img/cloud_run.png)
+
+![bigquery_mart](img/bigquery_mart.png)
+
 
 ### 6. Orchestration with Composer
 Cloud Composer triggers:
@@ -161,6 +175,11 @@ gcloud composer environments create composer-env \
   --image-version composer-2.1.5-airflow-2.5.1
 ```
 
+![dag_folder](img/dag_folder.png)
+
+![dag](img/dag.png)
+
+
 ### 7. Dashboarding in Looker Studio
 Final mart_* tables in BigQuery are connected to Looker
 - Dashboard shows:
@@ -168,4 +187,5 @@ Final mart_* tables in BigQuery are connected to Looker
 - Product insights
 - Customer behavior
 
+![dashboard](img/dashboard.png)
 
